@@ -32,8 +32,8 @@ const PhoneNumber = () => {
 
   return (
     <>
-      <div className="max-w-5xl m-5 p-6 bg-gray-200 rounded-lg shadow-lg my-auto">
-      <h6 className="font-semibold mb-4 text-sm">Phone Number</h6>
+      <div className="max-w-5xl p-6 bg-gray-200 rounded-lg shadow-lg my-auto">
+      <h6 className="font-semibold mb-4 text-sm text-start">Phone Number</h6>
 
       <div className='flex items-center gap-4 justify-center'>
       <input

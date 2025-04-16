@@ -3,10 +3,9 @@ import ProofOfFunds from '../Components/ProofOfFunds';
 
 const HomePage = () => {
   return (
-    <div>
+    <>
       <Hero />
-      <ProofOfFunds />
-    </div>
+    </>
   );
 };
 

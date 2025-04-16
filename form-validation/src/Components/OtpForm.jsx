@@ -33,8 +33,8 @@ const OtpForm = () => {
   };
 
   return (
-    <div className="max-w-5xl m-5 p-6 bg-gray-200 rounded-lg shadow-lg mb-1">
-      <h2 className="text-xl font-bold mb-4">Enter OTP</h2>
+    <div className="max-w-5xl mt-5 p-6 bg-gray-200 rounded-lg shadow-lg mb-1">
+      <h2 className="text-xl font-bold mb-4 text-start">Enter OTP</h2>
 
       <div className='flex justify-between mt-4 border-t-2 border-t-gray-300 pt-4'> 
         <div className="flex justify-center gap-4">
