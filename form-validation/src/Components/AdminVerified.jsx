@@ -16,7 +16,7 @@ const AdminVerified = () => {
             alert("Please select a file first.");
         }
     }
-  return (
+    return (
     <>
        <section className="bg-gray-100 py-10 min-h-[00px] p-4">
         <div className='text-start mb-4 flex items-center justify-between'>

@@ -52,7 +52,7 @@ const ProofOfFunds = () => {
           <div className="max-w-xl w-1/2">
             <form onSubmit={handleSubmit}>
               <div className="flex justify-center items-center relative">
-              <input placeholder="Name this proof of funds" class="w-full border border-gray-300 bg-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" value="" />
+              <input placeholder="Name this proof of funds" type="text" class="w-full border border-gray-300 bg-white rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
               </div>
               {selectedFile && (
                 <p className="mt-4 text-sm text-gray-700">
