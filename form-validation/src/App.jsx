@@ -2,20 +2,22 @@ import { BrowserRouter } from 'react-router-dom';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Hero from "./Components/Hero";
-import PhoneNumber from "./Components/PhoneNumber";
+// import PhoneNumber from "./Components/PhoneNumber";
 import ProofOfFunds from "./Components/ProofOfFunds";
 import DriverLicense from "./Components/DriverLicense";
 import BussinessVerification from "./Components/BussinessVerification";
 import CloserVerification from "./Components/CloserVerification";
 import AdminVerified from "./Components/AdminVerified";
 import "./App.css";
+import PhoneNumberWithOtp from './Components/PhoneNumberWithOtp';
 
 const HeroSteps = [
   {
     name: "Phone Verification",
-    Component: () => (
+    Component: ({ onVerified }) => (
       <>
-        <PhoneNumber />
+        {/* <PhoneNumber /> */}
+        <PhoneNumberWithOtp onVerified={onVerified} />,
       </>
     ),
   },

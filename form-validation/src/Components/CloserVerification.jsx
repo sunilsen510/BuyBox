@@ -1,26 +1,31 @@
+
 import React, { useState } from 'react';
 
-const CloserVerification = () => {
+const CloserVerification = ({ goToNextStep}) => {
   const [selectedFile, setSelectedFile] = useState(null);
-    const [message, setMessage] = useState('');
-  
-    const handleFileChange = (e) => {
-      setSelectedFile(e.target.files[0]);
-      setMessage(''); // Clear message on new file selection
-    };
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      if (selectedFile) {
-        setMessage(`✅ File "${selectedFile.name}" uploaded successfully!`);
-        // You can send `selectedFile` to your server here
-      } else {
-        setMessage("❌ Please select a file first.");
-      }
-    };
+  const [message, setMessage] = useState('');
+
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+    setMessage('');
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (selectedFile) {
+      setMessage(`✅ File "${selectedFile.name}" uploaded successfully!`);
+      
+      // Simulate async upload or trigger goToNextStep directly
+      setTimeout(() => {
+        goToNextStep(); // Proceed to next step after successful "upload"
+      }, 500);
+    } else {
+      setMessage("❌ Please select a file first.");
+    }
+  };
+
   return (
-    <>
-      <section className="bg-gray-100 py-10 min-h-[200px] p-4">
+    <section className="bg-gray-100 py-10 min-h-[200px] p-4">
       <div className='text-start mb-4 flex items-center justify-between'>
         <p className='font-semibold'>Settlement Statement</p>
       </div>
@@ -36,9 +41,9 @@ const CloserVerification = () => {
                 <path d="M70 74.375H35" stroke="#BEC0CD" strokeWidth="2" />
                 <path d="M43.75 39.375H35" stroke="#BEC0CD" strokeWidth="2" />
               </svg>
-              <span className="bg-blue-600 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-blue-700 transition">
+              <div className="bg-blue-600 text-white px-4 py-2 rounded text-sm font-semibold hover:bg-blue-700 transition inline-block">
                 Upload Documents
-              </span>
+              </div>
               <input
                 id="file-upload"
                 name="file-upload"
@@ -69,8 +74,7 @@ const CloserVerification = () => {
         </div>
       </form>
     </section>
-    </>
-  )
-}
+  );
+};
 
-export default CloserVerification
+export default CloserVerification;

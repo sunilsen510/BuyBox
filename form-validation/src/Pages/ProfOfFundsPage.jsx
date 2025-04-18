@@ -1,12 +1,12 @@
-import React from 'react'
-import ProofOfFunds from '../Components/ProofOfFunds'
+// import React from 'react'
+// import ProofOfFunds from '../Components/ProofOfFunds'
 
-const ProfOfFundsPage = () => {
-  return (
-    <>
-      <ProofOfFunds />
-    </>
-  )
-}
+// const ProfOfFundsPage = () => {
+//   return (
+//     <>
+//       <ProofOfFunds />
+//     </>
+//   )
+// }
 
-export default ProfOfFundsPage
+// export default ProfOfFundsPage
