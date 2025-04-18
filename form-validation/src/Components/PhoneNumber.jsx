@@ -1,24 +1,38 @@
 import React, { useState } from 'react';
+import OtpForm from './OtpForm';
 
-const PhoneNumber = () => {
+const PhoneNumber = ({oneTiemPass}) => {
 
     const [phone, setPhone] = useState('');
     const [error, setError] = useState('');
     const [sent, setSent] = useState(false);
+    const [oneTimePass,setoneTimePass] = useState();
 
   const validatePhone = (value) => {
     const phoneRegex = /^[6-9]\d{9}$/;
     return phoneRegex.test(value);
   };
 
+  let randomFourDigit = Math.floor(1000 + Math.random() * 9000);
+  // oneTiemPass = randomFourDigit
+  // console.log(randomFourDigit,"randomFourDigit");
+  
+
+  // console.log(oneTiemPass,"oneTiemPass");
+  
   const handleSend = () => {
+    console.log("hi");
+    
     if (!validatePhone(phone)) {
       setError('Please enter a valid 10-digit phone number');
       return;
     }
     setError('');
     setSent(true);
-    alert('OTP sent to ' + phone);
+    alert(`OTP sent to ${phone} is ${randomFourDigit}`);
+   setoneTimePass(randomFourDigit)
+    console.log(randomFourDigit,"randomFourDigit");
+    
   };
 
   const handleResend = () => {
@@ -67,6 +81,8 @@ const PhoneNumber = () => {
         </div>
       </div>
      </div>
+
+     <OtpForm oneTimePass={oneTimePass}/>
     </>
   );
 }

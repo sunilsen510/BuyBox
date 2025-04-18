@@ -1,95 +1,123 @@
-import React, { useState } from 'react';
-import BuildingImage from '../assets/building-1.svg';
-import PhoneNumber from './PhoneNumber';
-import OtpForm from './OtpForm';
-import ProofOfFunds from './ProofOfFunds';
-import DriverLicense from './DriverLicense';
-import BussinessVerification from './BussinessVerification';
-import CloserVerification from './CloserVerification';
-import AdminVerified from './AdminVerified';
+import { useEffect, useRef, useState } from "react";
+import BuildingImage from "../assets/building-1.svg";
 
-const Hero = () => {
+const Hero = ({ stepsConfig = [] }) => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [isComplete, setIsComplete] = useState(false);
+  const [margins, setMargins] = useState({
+    marginLeft: 0,
+    marginRight: 0,
+  });
 
-  const steps = [
-    { id: 1, label: 'Phone Verification' },
-    { id: 2, label: 'Proof of Funds' },
-    { id: 3, label: 'ID/Drivers License' },
-    { id: 4, label: 'Business Verification' },
-    { id: 5, label: 'Closer Verification' },
-    { id: 6, label: 'Admin Verified' }
-  ];
+  const stepRef = useRef([]);
 
-  const renderStepContent = () => {
-    switch (currentStep) {
-      case 1:
-        return (
-          <>
-            <PhoneNumber />
-            <OtpForm />
-          </>
-        );
-      case 2:
-        return <ProofOfFunds />;
-      case 3:
-        return <DriverLicense />;
-      case 4:
-        return <BussinessVerification />;
-      case 5:
-        return <CloserVerification />;
-      case 6:
-        return <AdminVerified />;
-      default:
-        return null;
-    }
+  useEffect(() => {
+    setMargins({
+      marginLeft: stepRef.current[0]?.offsetWidth / 2 || 0,
+      marginRight: stepRef.current[stepsConfig.length - 1]?.offsetWidth / 2 || 0,
+    });
+  }, [stepsConfig.length]);
+
+  const handleNext = () => {
+    setCurrentStep((prevStep) => {
+      if (prevStep < stepsConfig.length) {
+        return prevStep + 1;
+      } else {
+        setIsComplete(true);
+        return prevStep;
+      }
+    });
   };
 
-  return (
-    <section className="bg-gray-100 py-10 relative min-h-[800px]">
-      <div className="max-w-5xl mx-auto text-center">
-        {/* <h1 className="text-3xl font-bold mb-8">Verification Steps</h1> */}
+  const calculateProgressBarWidth = () => {
+    return ((currentStep - 1) / (stepsConfig.length - 1)) * 100;
+  };
 
-        {/* Stepper */}
-        <div className="flex justify-between items-center w-full max-w-6xl mx-auto">
-          {steps.map((step, index) => (
-            <div key={step.id} className="flex-1 flex items-center relative">
-              <button
-                onClick={() => setCurrentStep(step.id)}
-                className={`w-10 h-10 rounded-full flex items-center text-sm justify-center text-white font-semibold focus:outline-none transition-all duration-300 ${
-                  currentStep === step.id ? 'bg-blue-600 scale-110' : 'bg-gray-400'
+  const ActiveComponent = stepsConfig[currentStep - 1]?.Component;
+
+  if (!stepsConfig.length) return null;
+
+  return (
+    <>
+     
+     <div className="relative min-h-screen bg-gray-100 p-6 pt-12">
+      {/* Stepper */}
+      <div className="relative flex items-center justify-between mb-12 max-w-5xl mx-auto">
+        {stepsConfig.map((step, index) => {
+          const isActive = currentStep === index + 1;
+          const isCompleted = currentStep > index + 1 || isComplete;
+
+          return (
+            <div
+              key={step.name}
+              ref={(el) => (stepRef.current[index] = el)}
+              className="flex flex-col items-center flex-1 relative"
+            >
+              <div
+                className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition duration-300 z-10
+                ${
+                  isCompleted
+                    ? "bg-green-500 text-white"
+                    : isActive
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-300 text-gray-600"
                 }`}
               >
-                {step.id}
-              </button>
-
-              <div className="absolute top-12 left-1/3 transform -translate-x-15 text-sm font-medium text-gray-700">
-                {step.label}
+                {isCompleted ? "✓" : index + 1}
               </div>
-
-              {index < steps.length - 1 && (
-                <div
-                  className={`flex-1 h-1 mx-2 transition-all duration-300 ${
-                    currentStep > step.id ? 'bg-blue-600' : 'bg-gray-300'
-                  }`}
-                ></div>
-              )}
+              <span className="mt-2 text-sm text-center font-medium text-gray-700">
+                {step.name}
+              </span>
             </div>
-          ))}
-        </div>
+          );
+        })}
 
-        {/* Step Content */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 w-[90%] max-w-5xl">
-          {renderStepContent()}
-        </div>
+        {/* Progress Line */}
+            <div
+              className="absolute top-5 left-0 h-1 bg-gray-300 w-full z-0"
+              style={{
+                marginLeft: `${margins.marginLeft}px`,
+                marginRight: `${margins.marginRight}px`,
+              }}
+            >
+              <div
+                className="h-full bg-blue-600 transition-all duration-300"
+                style={{ width: `${calculateProgressBarWidth()}%` }}
+              ></div>
+            </div>
       </div>
 
-      <div className='absolute bottom-0 left-10 w-[450px] h-auto object-contain z-0'>
-        <img src={BuildingImage} alt='building' />
+      {/* Step Component */}
+      <div className="bg-white shadow-lg rounded-lg p-6 max-w-5xl mx-auto">
+        {ActiveComponent && <ActiveComponent />}
+
+
+
+        {/* Next Button */}
+      {!isComplete && (
+        <div className="mt-8 text-right">
+          <button
+            onClick={handleNext}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-semibold shadow-md transition"
+          >
+            {currentStep === stepsConfig.length ? "Finish" : "Next"}
+          </button>
+        </div>
+      )}
       </div>
-      <div className='absolute bottom-0 right-10 w-[450px] h-auto object-contain z-0'>
-        <img src={BuildingImage} alt='building' />
+
+      
+
+      {/* Background Images */}
+      <div className="absolute bottom-0 left-10 w-[450px] h-auto object-contain z-0">
+        <img src={BuildingImage} alt="building" />
       </div>
-    </section>
+      <div className="absolute bottom-0 right-10 w-[450px] h-auto object-contain z-0">
+        <img src={BuildingImage} alt="building" />
+      </div>
+    </div>
+
+    </>
   );
 };
 

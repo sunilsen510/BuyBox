@@ -1,28 +1,57 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
-import HomePage from './Pages/HomePage';  
-import ProfOfFundsPage from './Pages/ProfOfFundsPage';
-import './App.css';
-import DriverPage from './Pages/DriverPage';
-import BussinessPage from './Pages/BussinessPage';
+import Hero from "./Components/Hero";
+import PhoneNumber from "./Components/PhoneNumber";
+import ProofOfFunds from "./Components/ProofOfFunds";
+import DriverLicense from "./Components/DriverLicense";
+import BussinessVerification from "./Components/BussinessVerification";
+import CloserVerification from "./Components/CloserVerification";
+import AdminVerified from "./Components/AdminVerified";
+import "./App.css";
+
+const HeroSteps = [
+  {
+    name: "Phone Verification",
+    Component: () => (
+      <>
+        <PhoneNumber />
+      </>
+    ),
+  },
+  {
+    name: "Proof of Funds",
+    Component: ProofOfFunds,
+  },
+  {
+    name: "ID/Driver’s License",
+    Component: DriverLicense,
+  },
+  {
+    name: "Business Verification",
+    Component: BussinessVerification,
+  },
+  {
+    name: "Closer Verification",
+    Component: CloserVerification,
+  },
+  {
+    name: "Admin Verified",
+    Component: AdminVerified,
+  },
+];
 
 function App() {
+  
   return (
     <>
       <BrowserRouter>
         <Header />
-        <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/proofoffunds' element={<ProfOfFundsPage />} />
-          <Route path='/driverpage' element={<DriverPage />} />
-          <Route path='/bussiness' element={<BussinessPage/>} />
-        </Routes>
+        <Hero stepsConfig={HeroSteps} />
         <Footer />
-      </BrowserRouter>
+      </BrowserRouter>  
     </>
   );
 }
 
 export default App;
-
